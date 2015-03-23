@@ -1,0 +1,10 @@
+# OS-specific
+.DS_Store
+
+/vendor
+/node_modules
+.env
+
+# Vagrant stuff
+boxes/*
+/.vagrant
