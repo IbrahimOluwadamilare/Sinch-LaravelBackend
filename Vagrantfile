@@ -6,7 +6,10 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 80, host: 8080
 
     # synced folders
-    config.vm.synced_folder "~/Developer", "/home/vagrant/code"
+    config.vm.synced_folder "~/Developer", "/home/vagrant/code",
+        :owner          => 'vagrant',
+        :group          => 'www-data',
+        :mount_options  => ["dmode=775","fmode=664"]
 
     # nginx site serve
     config.vm.provision "shell",
