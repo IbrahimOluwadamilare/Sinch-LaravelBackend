@@ -107,7 +107,9 @@ class Base {
 
         $this->_set_where( $where );
 
-        return ( object ) $this->_db->{$collection}->findOne( $this->_ws, $this->_sls );
+        $user   = $this->_db->{$collection}->findOne( $this->_ws, $this->_sls );
+        $this->_flush();
+        return ( object ) $user;
     }
 
     protected function _from( $collection = "" ) {
