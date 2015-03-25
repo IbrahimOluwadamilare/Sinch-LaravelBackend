@@ -11,8 +11,16 @@
 |
 */
 
-Route::get('/', 'UserController@index');
+Route::post( 'sessions', 'SessionController@create' );
 
-Route::post( 'session', 'SessionController@create' );
+Route::delete( 'sessions/{token}', 'SessionController@destroy' );
 
-Route::delete( 'session/{token}', 'SessionController@destroy' );
+Route::delete( 'users/{id}', 'UserController@remove' );
+
+Route::get( 'users', 'UserController@retrieve' );
+
+Route::get( 'users/{id}', 'UserController@get' );
+
+Route::post( 'users', 'UserController@create' );
+
+Route::put( 'users/{id}', 'UserController@update' );
