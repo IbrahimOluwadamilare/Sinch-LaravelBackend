@@ -11,6 +11,8 @@
 |
 */
 
+Route::get( '/', 'DefaultController@index' );
+
 Route::post( 'sessions', 'SessionController@create' );
 
 Route::delete( 'sessions/{token}', 'SessionController@destroy' );
