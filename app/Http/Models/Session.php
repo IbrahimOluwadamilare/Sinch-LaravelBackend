@@ -22,6 +22,11 @@ class Session extends Base {
         return $session;
     }
 
+    public function find( $token ) {
+        $this->_where( '_id', $token );
+        return $this->_findOne( $this->_col );
+    }
+
     public function remove( $token ) {
         $this->_where( '_id', $token );
         return $this->_remove( $this->_col );
