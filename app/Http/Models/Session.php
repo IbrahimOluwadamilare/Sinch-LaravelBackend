@@ -1,0 +1,29 @@
+<?php namespace App\Http\Models;
+
+class Session extends Base {
+
+    private $_col   = "sessions";
+
+    public function create( $user ) {
+        // If there's already an active session for the user remove it
+        $this->_where( 'user_id', ( string ) $user->_id );
+        $existing   = $this->_findOne( $this->_col );
+
+        if ( !empty( ( array ) $existing ) ) {
+            $this->_where( 'user_id', ( string ) $user->_id );
+            $this->_remove( $this->_col );
+        }
+
+        $session            = new \stdClass();
+        $session->user_id   = ( string ) $user->_id;
+        $session->user_name = $user->name;
+        $session            = $this->_insert( $this->_col, $session );
+
+        return $session;
+    }
+
+    public function remove( $token ) {
+        $this->_where( '_id', $token );
+        return $this->_remove( $this->_col );
+    }
+}
