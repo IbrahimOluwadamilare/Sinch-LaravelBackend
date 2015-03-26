@@ -34,17 +34,17 @@ class UserController extends BaseController {
         if ( empty( $name ) || empty( ( array ) $location ) || empty( $fbId ) || empty( $gender ) || ( empty( $email ) && empty( $mobile ) ) ) {
             $result->error  = "ERROR_INVALID_PARAMETERS";
             $result->status = 403;
+        } else {
+            $user       = array(
+                "email"     => $email,
+                "fbId"      => $fbId,
+                "gender"    => $gender,
+                "location"  => $locObj,
+                "mobile"    => $mobile,
+                "name"      => $name
+            );
+            $result     = $this->_model->create( $user );
         }
-
-        $user       = array(
-            "email"     => $email,
-            "fbId"      => $fbId,
-            "gender"    => $gender,
-            "location"  => $locObj,
-            "mobile"    => $mobile,
-            "name"      => $name
-        );
-        $result     = $this->_model->create( $user );
 
         return $this->_response( $result );
     }
