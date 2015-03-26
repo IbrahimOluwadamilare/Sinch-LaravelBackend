@@ -103,12 +103,19 @@ class User extends Model {
             $data   = ( object ) $data;
         }
         if ( isset( $data->email ) || isset( $data->mobile ) ) {
-                $this->_where( '$or', array(
+                $this->_where( '$and', array(
                     array(
-                        "email"     => ( isset( $data->email ) ) ? $data->email : ""
+                        '_id'       => array( '$ne' => new \MongoId( $id ) )
                     ),
                     array(
-                        "mobile"    => ( isset( $data->mobile ) ) ? $data->mobile : ""
+                        '$or'       => array(
+                            array(
+                                'email'     => ( isset( $data->email ) ) ? $data->email : ""
+                            ),
+                            array(
+                                'mobile'    => ( isset( $data->mobile ) ) ? $data->mobile : ""
+                            )
+                        )
                     )
                 )
             );
