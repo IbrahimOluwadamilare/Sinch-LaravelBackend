@@ -98,31 +98,31 @@ class UserController extends BaseController {
     }
 
     public function update( Request $request, $id ) {
-        $email      = $request->get( 'email' );
-        $fbId       = $request->get( 'fbId' );
-        $gender     = $request->get( 'gender' );
-        $location   = $request->get( 'location' );
-        $mobile     = $request->get( 'mobile' );
-        $name       = $request->get( 'name' );
         $token      = $request->get( 'token' );
-
         $data       = new \stdClass();
-        if ( !empty( $email ) ) {
+        if ( !empty( $email = $request->get( 'email' ) ) ) {
             $data->email    = $email;
         }
-        if ( !empty( $fbId ) ) {
+        if ( !empty( $fbId = $request->get( 'fbId' ) ) ) {
             $data->fbId     = $fbId;
         }
-        if ( !empty( $gender ) ) {
+        if ( !empty( $gender = $request->get( 'gender' ) ) ) {
             $data->gender   = $gender;
         }
-        if ( !empty( $location ) ) {
-            $data->location = $location;
+        if ( !empty( $location = $request->get( 'location' ) ) ) {
+            if ( gettype( $location ) == "string" ) {
+                $location   = json_decode( $location );
+            }
+            $locObj                 = new \stdClass();
+            $locObj->type           = "Point";
+            $locObj->coordinates    = array( $location->lon, $location->lat );
+
+            $data->location = $locObj;
         }
-        if ( !empty( $mobile ) ) {
+        if ( !empty( $mobile = $request->get( 'mobile' ) ) ) {
             $data->mobile   = $mobile;
         }
-        if ( !empty( $name ) ) {
+        if ( !empty( $name = $request->get( 'name' ) ) ) {
             $data->name     = $name;
         }
 
