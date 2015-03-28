@@ -9,10 +9,20 @@ class User extends Model {
     private $_error = null;
 
     public function find( $where ) {
+        if ( !$this->_check_connection() ) {
+            $this->_error   = "ERROR_MONGODB_CONNECTION";
+            return false;
+        }
+
         return $this->_findOne( $this->_col, $where );
     }
 
     public function get( $id ) {
+        if ( !$this->_check_connection() ) {
+            $this->_error   = "ERROR_MONGODB_CONNECTION";
+            return false;
+        }
+
         $this->_where( '_id', $id );
         return $this->_findOne( $this->_col );
     }
@@ -22,6 +32,11 @@ class User extends Model {
     }
 
     public function create( $user ) {
+        if ( !$this->_check_connection() ) {
+            $this->_error   = "ERROR_MONGODB_CONNECTION";
+            return false;
+        }
+
         if ( is_array( $user ) ) {
             $user   = ( object ) $user;
         }
@@ -48,6 +63,11 @@ class User extends Model {
     }
 
     public function remove( $id ) {
+        if ( !$this->_check_connection() ) {
+            $this->_error   = "ERROR_MONGODB_CONNECTION";
+            return false;
+        }
+
         $this->_where( '_id', $id );
         $user   = $this->_findOne( $this->_col );
 
@@ -66,6 +86,11 @@ class User extends Model {
     }
 
     public function retrieve( $id, $distance = null, $limit = 9999, $page = 1 ) {
+        if ( !$this->_check_connection() ) {
+            $this->_error   = "ERROR_MONGODB_CONNECTION";
+            return false;
+        }
+
         if ( !empty( $distance ) ) {
             $this->_where( '_id', $id );
             $this->_select( 'location' );
@@ -99,6 +124,11 @@ class User extends Model {
     }
 
     public function update( $id, $data ) {
+        if ( !$this->_check_connection() ) {
+            $this->_error   = "ERROR_MONGODB_CONNECTION";
+            return false;
+        }
+
         if ( is_array( $data ) ) {
             $data   = ( object ) $data;
         }
