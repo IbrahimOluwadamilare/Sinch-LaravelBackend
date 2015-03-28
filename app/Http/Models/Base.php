@@ -67,6 +67,8 @@ class Base {
             return true;
         } catch( \MongoConnectionException $e ) {
             $this->_conn    = null;
+            $this->_db      = null;
+            abort( 500, "Mongo connection failed" );
             return false;
         }
     }
