@@ -31,44 +31,10 @@ class Base {
         $this->_connect();
     }
 
-    private function _connect() {
-        // Check the required configuration fields
-        if( empty( $this->_config['host'] ) ) {
-
-        }
-
-        // Set the connection string
-        $conn = 'mongodb://'.$this->_config['host'];
-        // Check that a port is specified
-        if( ! empty( $this->_config['port'] ) ) {
-            $conn .= ":{$this->_config['port']}";
-        }
-
-        // Check that a database is specified to use instead of admin
-        if( ! empty( $this->_config['db'] ) ) {
-            $conn .= "/{$this->_config['db']}";
-        }
-        // Check if username/password is beign used
-        $options = array();
-        if( ! empty( $this->_config['user'] ) && ! empty( $this->_config['pass'] ) ) {
-            // Use the options method instead of passing the user and pass in the address directly
-            // useful for the case the user includes ":" or "@" on the pass
-            $options['username'] = $this->_config['user'];
-            $options['password'] = $this->_config['pass'];
-        }
-
-        // Connect to the database
-        try {
-            // Establish the connection to the server
-            $this->_conn    = new \MongoClient( $conn, $options );
-
-            // Connect to the required database
-            $this->_db      = $this->_conn->{$this->_config['db']};
+    protected function _check_connection() {
+        if ( $this->_conn != null && $this->_db != null ) {
             return true;
-        } catch( \MongoConnectionException $e ) {
-            $this->_conn    = null;
-            $this->_db      = null;
-            abort( 500, "Mongo connection failed" );
+        } else {
             return false;
         }
     }
@@ -238,6 +204,48 @@ class Base {
             }
         } else {
             $this->_ws[$key] = $value;
+        }
+    }
+
+    private function _connect() {
+        // Check the required configuration fields
+        if( empty( $this->_config['host'] ) ) {
+
+        }
+
+        // Set the connection string
+        $conn = 'mongodb://'.$this->_config['host'];
+        // Check that a port is specified
+        if( ! empty( $this->_config['port'] ) ) {
+            $conn .= ":{$this->_config['port']}";
+        }
+
+        // Check that a database is specified to use instead of admin
+        if( ! empty( $this->_config['db'] ) ) {
+            $conn .= "/{$this->_config['db']}";
+        }
+        // Check if username/password is beign used
+        $options = array();
+        if( ! empty( $this->_config['user'] ) && ! empty( $this->_config['pass'] ) ) {
+            // Use the options method instead of passing the user and pass in the address directly
+            // useful for the case the user includes ":" or "@" on the pass
+            $options['username'] = $this->_config['user'];
+            $options['password'] = $this->_config['pass'];
+        }
+
+        // Connect to the database
+        try {
+            // Establish the connection to the server
+            $this->_conn    = new \MongoClient( $conn, $options );
+
+            // Connect to the required database
+            $this->_db      = $this->_conn->{$this->_config['db']};
+            return true;
+        } catch( \MongoConnectionException $e ) {
+            $this->_conn    = null;
+            $this->_db      = null;
+            abort( 500, "Mongo connection failed" );
+            return false;
         }
     }
 
