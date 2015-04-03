@@ -35,17 +35,17 @@ class SessionController extends BaseController {
                 $gender         = $request->get( 'gender' );
                 $location       = $request->get( 'location' );
 
-                if ( gettype( $location ) == "string" ) {
-                    $location   = json_decode( $location );
-                }
-                $locObj                 = new \stdClass();
-                $locObj->type           = "Point";
-                $locObj->coordinates    = array( $location->lon, $location->lat );
-
                 if ( empty( $name ) || empty( ( array ) $location ) || empty( $gender ) ) {
                     $result->error  = "ERROR_INVALID_PARAMETERS";
                     $result->status = 403;
                 } else {
+                    if ( gettype( $location ) == "string" ) {
+                        $location   = json_decode( $location );
+                    }
+                    $locObj                 = new \stdClass();
+                    $locObj->type           = "Point";
+                    $locObj->coordinates    = array( $location->lon, $location->lat );
+
                     $user->name     = $name;
                     $user->fbId     = $fbId;
                     $user->email    = $email;
