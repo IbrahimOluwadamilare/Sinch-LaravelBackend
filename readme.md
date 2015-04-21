@@ -1,12 +1,12 @@
-### Tuts+ Tutorial: Sinch Integration - Building a REST API with Laravel 5.0
+### Tuts+ Tutorial: Creating a Dating Application with Sinch: RESTful API
 
 #### Instructor: Carlos Cessa
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+In this tutorial, we're going to create a dating application for iOS similar to Tinder. For voice and messaging, we will leverage the Sinch platform, making use of its powerful SDK. In the first part, we will focus on the development of a RESTful API to store and retrieve user information. In the second part, the iOS client will hook into this API to find nearby users based on its current location.
 
-This tutorial will be the first of a two part series for a mobile Tinder-like dating application, focusing on integrating the [Sinch SDK](https://www.sinch.com/ "Sinch") in mobile applications to provide Voice, SMS, and Cloud VoIP. For this first part, we will create the REST API that the mobile application will use. This API will be built in Laravel 5.0 using modern development techniques.
+Source Files for the Tuts+ Tutorial: [Creating a Dating Application with Sinch: RESTful API](http://code.tutsplus.com/tutorials/creating-a-dating-application-with-sinch-restful-api--cms-23709)
 
-Source files for the Tuts+ tutorial: [Sinch Integration - Building a REST API with Laravel 5.0](http://code.tutsplus.com/tutorials/sinch-integration-laravel-50-rest-api--cms-23709 "Sinch Integration - Building a REST API with Laravel 5.0")
+**Read this tutorial on [Tuts+](https://code.tutsplus.com)**
 
 ## API Documentation
 
